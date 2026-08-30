@@ -1,0 +1,202 @@
+/* === STICKY NAVIGATION BAR === */
+.header-nav {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Sticky active state (applies only after scroll) */
+.header-nav.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  animation: slideDown 0.3s ease;
+  background: linear-gradient(90deg, var(--primary), var(--secondary)) !important;
+  color: #fff;
+}
+
+/* Sticky animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* === NAV STRUCTURE === */
+.header-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 28px;
+  padding: 14px 0;
+  margin: 0;
+}
+
+/* === NAV LINKS === */
+.header-nav a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.4px;
+  padding: 6px 10px;
+  transition: all 0.25s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.header-nav > ul > li > a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #fff;
+  transition: width 0.25s ease;
+}
+
+.header-nav > ul > li > a:hover::after {
+  width: 100%;
+}
+
+.header-nav a:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* === ACTIVE LINK === */
+.header-nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.2);
+}
+
+/* === DROPDOWNS === */
+.dropdown-icon {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+  opacity: 0.85;
+  margin-left: 4px;
+}
+
+.has-dropdown:hover .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.header-nav li {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-nav li:hover > .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown li a {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.dropdown li a:hover {
+  background: rgba(161, 0, 40, 0.08);
+  color: var(--primary);
+}
+
+/* === MOBILE === */
+@media (max-width: 900px) {
+  .header-nav {
+    position: static; /* no fixed position — controlled by scroll JS */
+    background: #fff;
+    border-top: 1px solid #eee;
+    box-shadow: var(--shadow);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .header-nav.open {
+    max-height: 600px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header-nav.sticky {
+    position: fixed;
+    top: 70px; /* below the header on mobile */
+    background: #fff;
+    width: 100%;
+    z-index: 999;
+  }
+
+  .header-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .header-nav a {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .header-nav a.active {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 6px;
+  }
+
+  .dropdown {
+    position: relative;
+    background: var(--muted);
+    box-shadow: none;
+    border-left: 2px solid var(--primary);
+    border-radius: 4px;
+    margin-left: 10px;
+    padding-left: 10px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .dropdown li a {
+    color: var(--text-light);
+  }
+}
